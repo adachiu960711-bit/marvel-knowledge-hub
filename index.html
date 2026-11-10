@@ -329,9 +329,21 @@ let lastAnswer = '';
 
 function loadSettings(){
   try{
-    $('api').value = localStorage.getItem('mh_api') || DEFAULT_API;
-    $('source').value = localStorage.getItem('mh_source') || DEFAULT_SOURCE;
-  }catch(e){}
+    const savedApi = localStorage.getItem('mh_api');
+    const savedSource = localStorage.getItem('mh_source');
+
+    $('api').value = savedApi && savedApi.trim()
+      ? savedApi
+      : DEFAULT_API;
+
+    $('source').value = savedSource && savedSource.trim()
+      ? savedSource
+      : DEFAULT_SOURCE;
+
+  }catch(e){
+    $('api').value = DEFAULT_API;
+    $('source').value = DEFAULT_SOURCE;
+  }
 }
 
 function saveSettings(){

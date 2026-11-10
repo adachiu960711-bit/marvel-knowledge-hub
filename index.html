@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marvel Knowledge Hub</title>
+
+<style>
+:root{
+  --bg:#080d18;
+  --panel:#101a2c;
+  --panel2:#17243a;
+  --line:#293b56;
+  --text:#f2f5fb;
+  --muted:#aab7ca;
+  --red:#e62429;
+  --blue:#68b8ff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:radial-gradient(circle at 80% 0,#1c2944 0,transparent 35%),var(--bg);
+  color:var(--text);
+  font-family:Arial,"Noto Sans TC",sans-serif;
+  min-height:100vh;
+}
+
+header{
+  padding:25px 8%;
+  background:#101a2c;
+  border-bottom:2px solid var(--red);
+}
+
+header h1{
+  margin:0;
+  font-size:27px;
+  letter-spacing:1px;
+}
+
+header p{
+  color:var(--muted);
+  margin-bottom:0;
+}
+
+main{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 18px;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:20px;
+}
+
+.panel{
+  background:#101a2c;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px;
+}
+
+h2{
+  font-size:19px;
+  margin-top:0;
+}
+
+p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:1px solid var(--line);
+  background:var(--panel2);
+  color:white;
+  border-radius:9px;
+  padding:11px 14px;
+}
+
+button:hover{
+  border-color:var(--blue);
+}
+
+.chip{
+  display:block;
+  width:100%;
+  text-align:left;
+  margin:10px 0;
+}
+
+.chat{
+  display:flex;
+  flex-direction:column;
+  min-height:650px;
+}
+
+.chathead{
+  border-bottom:1px solid var(--line);
+  padding-bottom:15px;
+}
+
+.chathead small{
+  color:var(--muted);
+}
+
+.messages{
+  flex:1;
+  overflow:auto;
+  max-height:500px;
+  padding:15px 0;
+}
+
+.msg{
+  padding:13px 15px;
+  border-radius:13px;
+  margin:12px 0;
+  line-height:1.7;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.bot{
+  background:#17243a;
+  border:1px solid #293b56;
+  margin-right:35px;
+}
+
+.user{
+  background:#84242c;
+  border:1px solid #b32b36;
+  margin-left:35px;
+}
+
+.composer{
+  display:flex;
+  gap:9px;
+  border-top:1px solid var(--line);
+  padding-top:15px;
+}
+
+input{
+  min-width:0;
+  flex:1;
+  padding:13px;
+  border-radius:9px;
+  border:1px solid #40516b;
+  background:#0b1423;
+  color:white;
+  outline:none;
+}
+
+input:focus{
+  border-color:var(--blue);
+}
+
+.send{
+  background:var(--red);
+  font-weight:bold;
+}
+
+.tools{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+details{
+  margin-top:20px;
+  border-top:1px solid var(--line);
+  padding-top:15px;
+  color:var(--muted);
+}
+
+summary{
+  cursor:pointer;
+  color:var(--blue);
+  font-weight:bold;
+}
+
+.config label{
+  display:block;
+  margin:12px 0 5px;
+  font-size:13px;
+}
+
+.config input{
+  width:100%;
+  margin-bottom:10px;
+}
+
+.config button{
+  margin-top:10px;
+}
+
+.status{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+footer{
+  text-align:center;
+  color:#8493aa;
+  font-size:12px;
+  padding:20px;
+}
+
+@media(max-width:760px){
+  .layout{
+    grid-template-columns:1fr;
+  }
+  .chat{
+    min-height:550px;
+  }
+  .bot{
+    margin-right:10px;
+  }
+  .user{
+    margin-left:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>MARVEL KNOWLEDGE HUB</h1>
+  <p>漫威宇宙互動知識中心 · Ask the Multiverse</p>
+</header>
+
+<main>
+<div class="layout">
+
+<aside class="panel">
+  <h2>探索漫威宇宙</h2>
+  <p>從角色背景、電影劇情到英雄組織，輸入問題開始探索。</p>
+
+  <button class="chip" data-q="請介紹美國隊長的角色背景與重要經歷。">
+    🛡️ 美國隊長角色介紹
+  </button>
+
+  <button class="chip" data-q="請整理復仇者聯盟的重要成員與成立背景。">
+    🦸 復仇者聯盟
+  </button>
+
+  <button class="chip" data-q="請說明無限寶石的種類與功能。">
+    💎 無限寶石整理
+  </button>
+
+  <button class="chip" data-q="漫威電影宇宙的時間線應該如何理解？">
+    ⏳ MCU 時間線
+  </button>
+
+  <details class="config">
+    <summary>⚙️ 連線設定</summary>
+
+    <label for="api">Cloudflare Worker API</label>
+    <input id="api" type="url"
+      placeholder="https://你的-worker.workers.dev/">
+
+    <label for="source">ChatPDF Source ID</label>
+    <input id="source" type="text"
+      placeholder="輸入 ChatPDF Source ID">
+
+    <button id="save">儲存設定</button>
+
+    <div class="status" id="status">尚未連線</div>
+    <p>API Key 已安全存放於後端環境變數。</p>
+  </details>
+</aside>
+
+<section class="panel chat">
+
+  <div class="chathead">
+    <h2>Stark Knowledge Assistant</h2>
+    <small>Marvel Assistant · RAG 問答</small>
+  </div>
+
+  <div class="messages" id="messages">
+    <div class="msg bot">
+      你好！我是 Marvel Knowledge Hub 的知識助理。
+
+      你可以問我漫威角色、電影、組織或世界觀相關問題。
+    </div>
+  </div>
+
+  <div class="composer">
+    <input id="question" type="text"
+      placeholder="輸入你想知道的漫威問題…">
+    <button class="send" id="send">送出</button>
+  </div>
+
+  <div class="tools">
+    <button id="read">🔊 朗讀回答</button>
+    <button id="stop">停止朗讀</button>
+    <button id="clear">清除對話</button>
+  </div>
+
+</section>
+</div>
+</main>
+
+<footer>
+Marvel Knowledge Hub · 學習與交流用途 · 非官方漫威產品
+</footer>
+
+<script>
+(() => {
+'use strict';
+
+const $ = id => document.getElementById(id);
+
+const DEFAULT_API = '';
+const DEFAULT_SOURCE = '';
+
+let history = [];
+let lastAnswer = '';
+
+function loadSettings(){
+  try{
+    $('api').value = localStorage.getItem('mh_api') || DEFAULT_API;
+    $('source').value = localStorage.getItem('mh_source') || DEFAULT_SOURCE;
+  }catch(e){}
+}
+
+function saveSettings(){
+  try{
+    localStorage.setItem('mh_api',$('api').value.trim());
+    localStorage.setItem('mh_source',$('source').value.trim());
+    $('status').textContent = '設定已儲存';
+  }catch(e){
+    $('status').textContent = '設定儲存失敗';
+  }
+}
+
+function addMessage(text,type){
+  const div = document.createElement('div');
+  div.className = 'msg '+type;
+  div.textContent = text;
+  $('messages').appendChild(div);
+  $('messages').scrollTop = $('messages').scrollHeight;
+  return div;
+}
+
+async function send(question){
+  const q = (question ?? $('question').value).trim();
+  if(!q)return;
+
+  const api = $('api').value.trim();
+  const source = $('source').value.trim();
+
+  if(!api || !source){
+    addMessage('請先展開左側連線設定，填入 Worker API 與 Source ID。','bot');
+    return;
+  }
+
+  addMessage(q,'user');
+  $('question').value = '';
+
+  history.push({role:'user',content:q});
+
+  const loading = addMessage('正在查詢漫威知識庫…','bot');
+
+  $('send').disabled = true;
+
+  try{
+    const response = await fetch(api,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        sourceId:source,
+        messages:history.slice(-6)
+      })
+    });
+
+    const data = await response.json();
+
+    if(!response.ok){
+      throw new Error(data.error || '後端連線失敗');
+    }
+
+    const answer = data.content || data.answer || '目前沒有取得回答。';
+
+    loading.textContent = answer;
+    lastAnswer = answer;
+
+    history.push({role:'assistant',content:answer});
+
+  }catch(error){
+    loading.textContent = '連線失敗：'+error.message;
+  }finally{
+    $('send').disabled = false;
+  }
+}
+
+$('send').onclick = () => send();
+
+$('question').addEventListener('keydown',e=>{
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    send();
+  }
+});
+
+document.querySelectorAll('[data-q]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    send(button.dataset.q);
+  });
+});
+
+$('save').onclick = saveSettings;
+
+$('clear').onclick = ()=>{
+  history = [];
+  lastAnswer = '';
+  $('messages').innerHTML = '';
+  addMessage('對話已清除，請選擇新的漫威主題。','bot');
+};
+
+$('read').onclick = ()=>{
+  if(!lastAnswer)return;
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(lastAnswer);
+  utterance.lang = 'zh-TW';
+  speechSynthesis.speak(utterance);
+};
+
+$('stop').onclick = ()=>{
+  speechSynthesis.cancel();
+};
+
+loadSettings();
+
+})();
+</script>
+
+</body>
+</html>
